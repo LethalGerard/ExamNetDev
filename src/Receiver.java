@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.net.*;
 
 public class Receiver implements Runnable {
@@ -18,7 +19,18 @@ public class Receiver implements Runnable {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 socket.receive(packet);
                 String message = new String(packet.getData(), 0, packet.getLength());
-                gui.addMsgToChat(message);
+                SwingUtilities.invokeLater(() -> {
+                    if (message.startsWith("Joined:")) {
+                        gui.addMemberToList(message.substring(8));
+                        //gui.addMsgToChat(message);
+                    } else if (message.startsWith("Disconnected:")) {
+                        String removeUser = message.substring(12);
+                        gui.removeUserFromList(removeUser);
+                        gui.addMsgToChat(message);
+                    } else {
+                        gui.addMsgToChat(message);
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();

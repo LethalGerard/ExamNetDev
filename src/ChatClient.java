@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.net.*;
 import java.io.*;
 
@@ -22,6 +23,11 @@ public class ChatClient {
         chatGUI = new ChatWindowGUI(userName, this);
         Receiver receiver = new Receiver(multicastSocket, chatGUI);
         new Thread(receiver).start();
+        sendMessage("Joined: " + userName);
+        javax.swing.Timer timer = new javax.swing.Timer(3000, e->{
+            sendMessage("Joined: " + userName);
+        });
+        timer.start();
     }
 
     public void sendMessage(String message) {

@@ -33,8 +33,12 @@ public class ChatWindowGUI extends JFrame {
         mainPanel.add(userInput, BorderLayout.SOUTH);
 
         add(mainPanel);
-        userInput.addActionListener(e->{
-            chatClient.sendMessage( chatClient.userName + ": " + userInput.getText());
+        disconnectBtn.addActionListener(e -> {
+            chatClient.sendMessage("Disconnected: " + chatClient.userName);
+            System.exit(0);
+        });
+        userInput.addActionListener(e -> {
+            chatClient.sendMessage(chatClient.userName + ": " + userInput.getText());
             userInput.setText("");
         });
         setVisible(true);
@@ -45,6 +49,12 @@ public class ChatWindowGUI extends JFrame {
     }
 
     public void addMemberToList(String member) {
-        memberList.append(member);
+        if (!(memberList.getText().contains(member))) {
+            memberList.append(member);
+        }
+    }
+
+    public void removeUserFromList(String removeUser) {
+        memberList.setText(memberList.getText().replace(removeUser + "\n", ""));
     }
 }
