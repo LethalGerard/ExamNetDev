@@ -3,6 +3,11 @@ import java.awt.*;
 
 public class ChatWindowGUI extends JFrame {
 
+    private JButton disconnectBtn;
+    private JTextArea chatArea;
+    private JTextArea memberList;
+    private JTextField userInput;
+
     public ChatWindowGUI(String userName) {
         setTitle("Chat - " + userName);
         setSize(700, 500);
@@ -10,19 +15,41 @@ public class ChatWindowGUI extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
-        JButton exitChat = new JButton("Exit chat");
-        JTextArea textArea = new JTextArea();
+        disconnectBtn = new JButton("Exit chat");
+        chatArea = new JTextArea();
+        chatArea.setEditable(false);
+        memberList = new JTextArea(10, 15);
+        memberList.setEditable(false);
+        userInput = new JTextField();
+        JScrollPane memberScroll = new JScrollPane(memberList);
+        JScrollPane chatScroll = new JScrollPane(chatArea);
 
-
-        mainPanel.add(exitChat, BorderLayout.NORTH);
-        mainPanel.add(textArea, BorderLayout.WEST);
-
+        mainPanel.add(disconnectBtn, BorderLayout.NORTH);
+        mainPanel.add(chatScroll, BorderLayout.CENTER);
+        mainPanel.add(memberScroll, BorderLayout.EAST);
+        mainPanel.add(userInput, BorderLayout.SOUTH);
 
         add(mainPanel);
+        userInput.addActionListener(e->{
+            addMsgToChat(userInput.getText());
+            userInput.setText("");
+        });
         setVisible(true);
+    }
+
+    public void addMsgToChat(String message) {
+        chatArea.append(message + "\n");
+    }
+
+    public void addMemberToList(String member) {
+        memberList.append(member);
     }
 }
 
 void main() {
-    ChatWindowGUI chatClient = new ChatWindowGUI("Kim");
+
+    String name = JOptionPane.showInputDialog(null, "Pick a name!", "Username", JOptionPane.QUESTION_MESSAGE);
+    ChatWindowGUI chatClient = new ChatWindowGUI(name);
+    chatClient.addMsgToChat(name + " anslöt till chatten");
+    chatClient.addMemberToList(name);
 }
