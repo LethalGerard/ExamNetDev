@@ -3,12 +3,15 @@ import java.awt.*;
 
 public class ChatWindowGUI extends JFrame {
 
+    private ChatClient chatClient;
+
     private JButton disconnectBtn;
     private JTextArea chatArea;
     private JTextArea memberList;
     private JTextField userInput;
 
-    public ChatWindowGUI(String userName) {
+    public ChatWindowGUI(String userName, ChatClient chatClient) {
+        this.chatClient = chatClient;
         setTitle("Chat - " + userName);
         setSize(700, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -31,7 +34,7 @@ public class ChatWindowGUI extends JFrame {
 
         add(mainPanel);
         userInput.addActionListener(e->{
-            addMsgToChat(userInput.getText());
+            chatClient.sendMessage( chatClient.userName + ": " + userInput.getText());
             userInput.setText("");
         });
         setVisible(true);

@@ -19,7 +19,9 @@ public class ChatClient {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        chatGUI = new ChatWindowGUI(userName);
+        chatGUI = new ChatWindowGUI(userName, this);
+        Receiver receiver = new Receiver(multicastSocket, chatGUI);
+        new Thread(receiver).start();
     }
 
     public void sendMessage(String message) {
