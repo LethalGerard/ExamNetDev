@@ -45,11 +45,3 @@ public class ChatWindowGUI extends JFrame {
         memberList.append(member);
     }
 }
-
-void main() {
-
-    String name = JOptionPane.showInputDialog(null, "Pick a name!", "Username", JOptionPane.QUESTION_MESSAGE);
-    ChatWindowGUI chatClient = new ChatWindowGUI(name);
-    chatClient.addMsgToChat(name + " anslöt till chatten");
-    chatClient.addMemberToList(name);
-}
