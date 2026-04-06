@@ -3,12 +3,12 @@ import java.awt.*;
 
 public class ChatWindowGUI extends JFrame {
 
-    private ChatClient chatClient;
+    ChatClient chatClient;
 
-    private JButton disconnectBtn;
-    private JTextArea chatArea;
-    private JTextArea memberList;
-    private JTextField userInput;
+    final JButton disconnectBtn;
+    final JTextArea chatArea;
+    final JTextArea memberList;
+    final JTextField userInput;
 
     public ChatWindowGUI(String userName, ChatClient chatClient) {
         this.chatClient = chatClient;
@@ -33,11 +33,11 @@ public class ChatWindowGUI extends JFrame {
         mainPanel.add(userInput, BorderLayout.SOUTH);
 
         add(mainPanel);
-        disconnectBtn.addActionListener(e -> {
+        disconnectBtn.addActionListener(_ -> {
             chatClient.sendMessage("Disconnected: " + chatClient.userName);
             System.exit(0);
         });
-        userInput.addActionListener(e -> {
+        userInput.addActionListener(_ -> {
             chatClient.sendMessage(chatClient.userName + ": " + userInput.getText());
             userInput.setText("");
         });
@@ -50,7 +50,7 @@ public class ChatWindowGUI extends JFrame {
 
     public void addMemberToList(String member) {
         if (!(memberList.getText().contains(member))) {
-            memberList.append(member);
+            memberList.append(member + "\n");
         }
     }
 

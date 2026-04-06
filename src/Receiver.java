@@ -22,9 +22,8 @@ public class Receiver implements Runnable {
                 SwingUtilities.invokeLater(() -> {
                     if (message.startsWith("Joined:")) {
                         gui.addMemberToList(message.substring(8));
-                        //gui.addMsgToChat(message);
                     } else if (message.startsWith("Disconnected:")) {
-                        String removeUser = message.substring(12);
+                        String removeUser = message.substring(14);
                         gui.removeUserFromList(removeUser);
                         gui.addMsgToChat(message);
                     } else {

@@ -23,7 +23,7 @@ public class ChatClient {
         chatGUI = new ChatWindowGUI(userName, this);
         Receiver receiver = new Receiver(multicastSocket, chatGUI);
         new Thread(receiver).start();
-        sendMessage("Joined: " + userName);
+        sendMessage("Just joined: " + userName);
         javax.swing.Timer timer = new javax.swing.Timer(3000, e->{
             sendMessage("Joined: " + userName);
         });
