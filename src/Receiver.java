@@ -5,8 +5,10 @@ public class Receiver implements Runnable {
 
     MulticastSocket socket;
     ChatWindowGUI gui;
+    ChatClient client;
 
-    public Receiver(MulticastSocket socket, ChatWindowGUI gui) {
+    public Receiver(MulticastSocket socket, ChatWindowGUI gui, ChatClient client) {
+        this.client = client;
         this.socket = socket;
         this.gui = gui;
     }
@@ -22,6 +24,9 @@ public class Receiver implements Runnable {
                 SwingUtilities.invokeLater(() -> {
                     if (message.startsWith("Joined:")) {
                         gui.addMemberToList(message.substring(8));
+                        client.sendPingback();
+                    } else if (message.startsWith("Pingback:")) {
+                        gui.addMemberToList(message.substring(10));
                     } else if (message.startsWith("Disconnected:")) {
                         String removeUser = message.substring(14);
                         gui.removeUserFromList(removeUser);

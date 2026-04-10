@@ -5,7 +5,7 @@ import java.io.*;
 
 public class ChatClient {
     ChatWindowGUI chatGUI;
-    int port = 8888;
+    int port = 44444;
     String userName;
 
     MulticastSocket multicastSocket;
@@ -15,19 +15,20 @@ public class ChatClient {
         this.userName = userName;
         multicastSocket = new MulticastSocket(port);
         try {
-            inetAddress = InetAddress.getByName("230.30.30.30");
+            inetAddress = InetAddress.getByName("234.234.234.234");
             multicastSocket.joinGroup(inetAddress);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         chatGUI = new ChatWindowGUI(userName, this);
-        Receiver receiver = new Receiver(multicastSocket, chatGUI);
+        Receiver receiver = new Receiver(multicastSocket, chatGUI, this);
         new Thread(receiver).start();
         sendMessage("Just joined: " + userName);
-        javax.swing.Timer timer = new javax.swing.Timer(3000, e->{
-            sendMessage("Joined: " + userName);
-        });
-        timer.start();
+        sendMessage("Joined: " + userName);
+    }
+
+    public void sendPingback() {
+        sendMessage("Pingback: " + userName);
     }
 
     public void sendMessage(String message) {

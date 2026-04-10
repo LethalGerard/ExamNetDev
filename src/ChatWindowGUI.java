@@ -24,6 +24,7 @@ public class ChatWindowGUI extends JFrame {
         memberList = new JTextArea(10, 15);
         memberList.setEditable(false);
         userInput = new JTextField();
+
         JScrollPane memberScroll = new JScrollPane(memberList);
         JScrollPane chatScroll = new JScrollPane(chatArea);
 
